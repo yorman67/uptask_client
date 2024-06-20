@@ -64,6 +64,8 @@ export default function ProjectForm({register, errors}: ProejectFormProps) {
                     <ErrorMessage>{errors.description.message}</ErrorMessage>
                 )}
             </div>
+
+            
         </>
     )
 }
