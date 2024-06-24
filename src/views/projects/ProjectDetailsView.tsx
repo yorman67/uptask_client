@@ -3,6 +3,8 @@ import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { getProjectById } from "../../api/ProjectApi"
 import AddTaskModal from "../../components/tasks/AddTaskModal"
 import TaskList from "../../components/tasks/TaskList"
+import EditTaskData from "../../components/tasks/EditTaskData"
+import TaskModalDetails from "../../components/tasks/TaskModalDetails"
 
 export default function ProjectDetailsView() {
     const navigate = useNavigate()
@@ -34,8 +36,9 @@ export default function ProjectDetailsView() {
         <TaskList
             tasks={data.tasks}
         />
-
-        <AddTaskModal/>
+        <AddTaskModal/> 
+        <EditTaskData/>
+        <TaskModalDetails/>
      </>
     )
 }

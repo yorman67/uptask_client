@@ -4,13 +4,16 @@ import { z } from 'zod'
 /**tasks*/
 
 export const TaskStatusSchmema = z.enum(["PENDING","ON_HOOLD","IN_PROGRESS","UNDER_REVIEW","COMPLETED"])
+export type TaskStatus = z.infer<typeof TaskStatusSchmema>
 
 export const taskSchema = z.object({
     _id: z.string(),
     name: z.string(),
     description: z.string(),
     status: TaskStatusSchmema,
-    project: z.string()
+    project: z.string(),
+    createdAt : z.string(),
+    updatedAt : z.string()
 })
 
 export const taskProjectSchema = taskSchema.pick({

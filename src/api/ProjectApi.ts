@@ -4,7 +4,7 @@ import { Project, ProjectFormData, dashboardProjectSchema, projectSchema } from 
 
 export async function createProject(formData: ProjectFormData) {
     try {
-        const { data } = await axiosClient.post('/newProjects', formData)
+        const { data } = await axiosClient.post('/project', formData)
         return data
     }
     catch (error) {
@@ -17,7 +17,7 @@ export async function createProject(formData: ProjectFormData) {
 
 export async function getProjects() {
     try {
-        const { data } = await axiosClient.get('/projects')
+        const { data } = await axiosClient.get('/project')
         const response = dashboardProjectSchema.safeParse(data.projects)
         if(response.success) {
             return response.data
@@ -32,7 +32,7 @@ export async function getProjects() {
 
 export async function  getProjectById(id: Project['_id']) {
     try {
-        const { data } = await axiosClient.get(`/projects/${id}`)
+        const { data } = await axiosClient.get(`/project/${id}`)
         const response = projectSchema.safeParse(data.project)
         if(response.success) {
             return response.data
@@ -52,7 +52,7 @@ type UpdateProjectProps = {
 }
 export async function updateProject({formData, idProject}: UpdateProjectProps) {
     try {
-        const { data } = await axiosClient.put(`/projects/${idProject}`, formData)
+        const { data } = await axiosClient.put(`/project/${idProject}`, formData)
         return data
     }
     catch (error) {
@@ -64,7 +64,7 @@ export async function updateProject({formData, idProject}: UpdateProjectProps) {
 
 export async function deleteProject(id: Project['_id']) {
     try {
-        const { data } = await axiosClient.delete(`/projects/${id}`)
+        const { data } = await axiosClient.delete(`/project/${id}`)
         return data.project
     }
     catch (error) {

@@ -18,7 +18,7 @@ export default function DashboardView() {
   const { mutate } = useMutation({
     mutationFn: deleteProject,
     onSuccess: (data) => {
-     queryClient.invalidateQueries({ queryKey: ['projects'] })
+     queryClient.invalidateQueries({ queryKey: ['tasks'] })
      toast.success(data.message)
     },
     onError: (error) => {

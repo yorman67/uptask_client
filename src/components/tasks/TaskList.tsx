@@ -1,3 +1,4 @@
+import { statusTranslations } from "../../locales/es"
 import { Task } from "../../types"
 import TaskCard from "./TaskCard"
 
@@ -17,13 +18,6 @@ const initialStatusGroups: GroupedTask = {
   COMPLETED: [],
 }
 
-const statusTranslations :{[key: string]: string} = {
-  PENDING: "Pendiente",
-  ON_HOOLD: "En espera",
-  IN_PROGRESS: "En progreso",
-  UNDER_REVIEW: "Revisión",
-  COMPLETED: "Completada",
-}
 
 const statusStyles :{[key: string]: string} = {
   PENDING: "border-t-slate-300",
