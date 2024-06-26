@@ -35,7 +35,6 @@ export default function TaskList({ tasks }: TaskListProps) {
     return { ...acc, [task.status]: currentGroup };
   }, initialStatusGroups);
 
-  //console.log(groupedTasks)
 
   return (
     <>

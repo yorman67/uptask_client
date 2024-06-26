@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from "axios";
+import  { isAxiosError } from "axios";
 import axiosClient from "../lib/axios";
 import { Project, Task, TaskFormData, taskSchema } from "../types";
 
@@ -64,7 +64,6 @@ export async function deleteTask({ projectId, taskId }: Pick<TaskAPI, 'projectId
 export async function updateStatus({ projectId, taskId, status }: Pick<TaskAPI, 'projectId' | 'taskId' | 'status'>) {
     try {
         const { data } = await axiosClient.post(`project/${projectId}/tasks/${taskId}/status`, { status })
-        console.log(data)
         return data
     }
     catch (error) {

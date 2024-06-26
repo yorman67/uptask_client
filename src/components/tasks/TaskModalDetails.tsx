@@ -56,7 +56,6 @@ export default function TaskModalDetails() {
     if (isError) {
 
         toast.error(error.message, { toastId: 'error' })
-        console.log(projectId)
         return <Navigate to={`/projects/${projectId}/details`} />
     }
 
