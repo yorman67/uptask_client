@@ -1,13 +1,14 @@
 import { statusTranslations } from "../../locales/es"
-import { Task } from "../../types"
+import { TaskProject } from "../../types"
 import TaskCard from "./TaskCard"
 
 type TaskListProps = {
-  tasks: Task[]
+  tasks: TaskProject[]
+  canEdit?: boolean
 }
 
 type GroupedTask = {
-  [key: string]: Task[]
+  [key: string]: TaskProject[]
 }
 
 const initialStatusGroups: GroupedTask = {
@@ -26,7 +27,7 @@ const statusStyles :{[key: string]: string} = {
   UNDER_REVIEW: "border-t-amber-300",
   COMPLETED: "border-t-emerald-300",
 }
-export default function TaskList({ tasks }: TaskListProps) {
+export default function TaskList({ tasks , canEdit}: TaskListProps) {
 
   const groupedTasks = tasks.reduce((acc, task) => {
 
@@ -48,7 +49,7 @@ export default function TaskList({ tasks }: TaskListProps) {
               {tasks.length === 0 ? (
                 <li className="text-gray-500 text-center pt-3">No Hay tareas</li>
               ) : (
-                tasks.map(task => <TaskCard key={task._id} task={task} />)
+                tasks.map(task => <TaskCard key={task._id} task={task} canEdit={canEdit}/>)
               )}
             </ul>
           </div>

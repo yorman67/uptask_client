@@ -24,10 +24,10 @@ export default function TaskModalDetails() {
         queryKey: ['task', taskId],
         queryFn: () => getTaskById({ projectId, taskId }),
         enabled: !!taskId,
-        retry: false
+        retry: 1
     })
 
-    
+
     const queryClient = useQueryClient()
     const { mutate } = useMutation({
         mutationFn: updateStatus,
@@ -93,10 +93,28 @@ export default function TaskModalDetails() {
                                     <Dialog.Title
                                         as="h3"
                                         className="font-black text-4xl text-slate-600 my-5"
-                                    >{data?.name}
+                                    >{data.name}
                                     </Dialog.Title>
 
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data?.description}</p>
+
+                                    <p className='text-lg text-slate-500 mb-2'>Historial de cambios</p>
+
+                                    <ul className='list-disc'>
+                                    {data.completedBy.map((activitylog) => (
+                                        <li
+                                            key={activitylog._id}
+                                        >
+
+                                            <span className='font-bold text-slate-600'>
+                                                { statusTranslations[activitylog.status] }
+                                            </span>  por :{' '}
+                                            {activitylog.user.name}
+                                        </li>
+                                    ))}
+                                    </ul>
+                                   
+
 
                                     <div className='my-5 space-y-3'>
                                         <label className='font-bold'>Estado Actual: </label>
