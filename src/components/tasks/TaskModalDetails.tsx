@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { formatDate } from '../../utils/utils';
 import { statusTranslations } from '../../locales/es';
 import { TaskStatus } from '../../types';
+import NotesPanel from '../notes/NotesPanel';
 
 
 export default function TaskModalDetails() {
@@ -98,22 +99,26 @@ export default function TaskModalDetails() {
 
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data?.description}</p>
 
-                                    <p className='text-lg text-slate-500 mb-2'>Historial de cambios</p>
+                                    {data.completedBy.length > 0 && (
+                                        <>
+                                            <p className='font-bold text-2xl text-slate-600 my-5'>Historial de cambios</p>
+                                        </>
+                                    )}
 
                                     <ul className='list-disc'>
-                                    {data.completedBy.map((activitylog) => (
-                                        <li
-                                            key={activitylog._id}
-                                        >
+                                        {data.completedBy.map((activitylog) => (
+                                            <li
+                                                key={activitylog._id}
+                                            >
 
-                                            <span className='font-bold text-slate-600'>
-                                                { statusTranslations[activitylog.status] }
-                                            </span>  por :{' '}
-                                            {activitylog.user.name}
-                                        </li>
-                                    ))}
+                                                <span className='font-bold text-slate-600'>
+                                                    {statusTranslations[activitylog.status]}
+                                                </span>  por :{' '}
+                                                {activitylog.user.name}
+                                            </li>
+                                        ))}
                                     </ul>
-                                   
+
 
 
                                     <div className='my-5 space-y-3'>
@@ -130,6 +135,9 @@ export default function TaskModalDetails() {
                                             ))}
                                         </select>
                                     </div>
+                                    <NotesPanel
+                                        notes={data?.notes}
+                                    />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

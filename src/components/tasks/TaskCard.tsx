@@ -39,7 +39,7 @@ export default function TaskCard({ task ,canEdit}: TaskCardProps) {
     }
 
     return (
-        <li className="p-5 bgwhite border border-slate-300 flex justify-between gap-3">
+        <li className="p-5 bg-white border border-slate-300 flex justify-between gap-3">
             <div className="min-w-0 flex flex-col gap-y-4">
                 <button
                     type="button"
