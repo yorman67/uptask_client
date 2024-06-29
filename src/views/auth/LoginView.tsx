@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../api/AuthApi";
 import { toast } from "react-toastify";
+import CheckEmailModal from "../../components/auth/CheckEmailModal";
 
 export default function LoginView() {
 
@@ -15,17 +16,22 @@ export default function LoginView() {
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
     const navigate = useNavigate()
-    const {mutate} = useMutation({
+    const { mutate } = useMutation({
         mutationFn: login,
-        onSuccess: () => {
-            navigate('/')
+        onSuccess: (data) => {
+            if (data.token) {
+                navigate("?checkAccount=true")
+            } else {
+                navigate('/')
+            }
+
         },
         onError: (error) => {
-           toast.error(error.message)
+            toast.error(error.message)
         }
     })
 
-    const handleLogin = (formData: UserLoginForm) => { 
+    const handleLogin = (formData: UserLoginForm) => {
         mutate(formData)
     }
 
@@ -94,15 +100,17 @@ export default function LoginView() {
             <nav className="mt-10 flex flex-col space-y-4">
                 <Link to="/auth/register"
                     className="text-center text-white"
-                    > ¿No tienes cuenta?
+                > ¿No tienes cuenta?
                     <span className="text-fuchsia-600"> Registrate </span>
                 </Link>
                 <Link to="/auth/forgot-password"
                     className="text-center text-white"
-                    > ¿Olvidaste tu contraseña?
+                > ¿Olvidaste tu contraseña?
                     <span className="text-fuchsia-600"> Restablecer </span>
                 </Link>
             </nav>
+
+            <CheckEmailModal />
         </>
     )
 }

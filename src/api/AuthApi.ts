@@ -91,6 +91,7 @@ export async function resetPasswordWithToken({formData,token}: {formData: NewPas
 export async function getUser() {
     try {
         const { data } = await axiosClient.get('/auth/get-user')
+        console.log(data)
         const response = userSchema.safeParse(data.user)
         if(response.success) {
             return response.data
