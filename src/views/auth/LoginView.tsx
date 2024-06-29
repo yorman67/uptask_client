@@ -19,7 +19,8 @@ export default function LoginView() {
     const { mutate } = useMutation({
         mutationFn: login,
         onSuccess: (data) => {
-            if (data.token) {
+            
+            if (data.token,length > 6) {
                 navigate("?checkAccount=true")
             } else {
                 navigate('/')
