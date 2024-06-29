@@ -1,34 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import {  useQuery } from "@tanstack/react-query"
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import { Link } from "react-router-dom"
-import { deleteProject, getProjects } from "../api/ProjectApi"
-import { toast } from "react-toastify"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { getProjects } from "../api/ProjectApi"
 import { useAuth } from "../hooks/useAuth"
 import { isManager } from "../utils/policies"
+import DeleteProjectModal from "../components/projects/DeleteProjectModal"
 export default function DashboardView() {
 
   const { data: user, isLoading: authLoading } = useAuth()
 
   //https://tanstack.com/query/latest/docs/framework/react/reference/useQuery#usequery
-
+  const location = useLocation()
+  const navigate = useNavigate()
+  
   const { data, isLoading } = useQuery({
     queryKey: ['projects'],
     queryFn: getProjects
-  })
-
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation({
-    mutationFn: deleteProject,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] })
-      toast.success(data.message)
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    }
   })
 
 
@@ -112,7 +101,7 @@ export default function DashboardView() {
                                 <button
                                   type='button'
                                   className='block px-3 py-1 text-sm leading-6 text-red-500'
-                                  onClick={() => mutate(project._id)}
+                                  onClick={() => navigate(location.pathname + `?deleteProject=${project._id}` )}
                                 >
                                   Eliminar Proyecto
                                 </button>
@@ -133,6 +122,8 @@ export default function DashboardView() {
                 className="text-purple-400 hover:text-purple-500 font-bold">Crear Proyecto</Link>
             </p>
           )}
+
+          <DeleteProjectModal/>
       </>
     )
   }

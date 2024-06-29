@@ -9,7 +9,7 @@ export default function AuthLayout() {
                 
                 <div className="py-10 lg:py-2 mx-auto w-[450px]">
                     <Logo />
-
+                
                     <div className="mt-10">
                         <Outlet />
                     </div>

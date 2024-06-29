@@ -1,4 +1,4 @@
-import { create } from 'domain'
+
 import { z } from 'zod'
 
 /**auth*/
@@ -6,6 +6,7 @@ import { z } from 'zod'
 const authSchema = z.object({
     name: z.string(),
     email: z.string().email(),
+    current_password: z.string(),
     password: z.string(),
     password_confirmation: z.string(),
     token: z.string()
@@ -18,6 +19,8 @@ export type ConfirmToken = Pick<Auth, 'token'>
 export type RequestConfirmationCodeForm = Pick<Auth, 'email'>
 export type ForgotPasswordForm = Pick<Auth, 'email'>
 export type NewPasswordForm = Pick<Auth, 'password' | 'password_confirmation'>
+export type UpdateCurrentPasswordForm = Pick<Auth, 'current_password' | 'password' | 'password_confirmation'>
+export type checkPasswordForm = Pick<Auth, 'password'>
 
 /**User */
 export const userSchema = authSchema.pick ({
@@ -86,10 +89,13 @@ export const projectSchema = z.object({
     projectName: z.string(),
     clientName: z.string(),
     description: z.string(),
-    tasks: z.array(taskProjectSchema),
     manager: z.string(userSchema.pick({
         _id: true
     })),
+    tasks: z.array(taskProjectSchema),
+    team: z.array(z.array(userSchema.pick({
+        _id: true
+    }))),
 })
 
 export const dashboardProjectSchema = z.array(
@@ -101,6 +107,12 @@ export const dashboardProjectSchema = z.array(
         manager: true
     })
 )
+
+export const editProjectSchema = projectSchema.pick({    
+    projectName: true,
+    clientName: true,
+    description: true
+})
 
 export type Project = z.infer<typeof projectSchema>
 export type ProjectFormData = Pick<Project, 'projectName' | 'clientName' | 'description'>
