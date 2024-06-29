@@ -20,10 +20,13 @@ export default function LoginView() {
         mutationFn: login,
         onSuccess: (data) => {
             
-            if (data.token,length > 6) {
-                navigate("?checkAccount=true")
-            } else {
+            console.log(data.token.length >6)
+            
+            if (data.token.length > 6) {
                 navigate('/')
+            } else {
+                navigate("?checkAccount=true")
+                
             }
 
         },
